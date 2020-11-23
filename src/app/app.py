@@ -4,11 +4,12 @@ Created on Nov 23, 2020
 @author: manso
 '''
 
-import tkinter as tk                    # Import for gui.
+import tkinter as tk                   # Import for gui.
 from tkinter import filedialog, Text    # Import for file browsing and displaying text.
 import os
 
 root = tk.Tk()
+root.title("Zaezul's Loader")
 apps = []
 
 if os.path.isfile('Saved Apps.txt'):
