@@ -4,8 +4,8 @@ Created on Nov 23, 2020
 @author: manso
 '''
 
-import tkinter as tk                   # Import for gui.
-from tkinter import filedialog, Text    # Import for file browsing and displaying text.
+import tkinter as tk
+from tkinter import *
 import os
 
 root = tk.Tk()
@@ -24,7 +24,7 @@ if os.path.isfile('Saved Apps.txt'):
 # Adds an app to be run.
 def addApp():
 
-    for widget in frame.winfo_children():
+    for widget in myframe.winfo_children():
         widget.destroy()
 
 
@@ -37,7 +37,7 @@ def addApp():
 
     # print(filename)
     for app in apps:
-        label = tk.Label(frame, text=app, bg="gray")
+        label = tk.Label(myframe, text=app, bg="gray")
         label.pack()
 
 # Runs all apps in the list.
@@ -48,8 +48,15 @@ def runApps():
 canvas = tk.Canvas(root, height=700, width=700, bg="#638EF9")
 canvas.pack()
 
-frame = tk.Frame(root, bg="white")
-frame.place(relwidth=.8, relheight=.8, relx=.1, rely=.05)
+myframe = tk.Frame(root, bg="white")
+myframe.place(relwidth=.8, relheight=.8, relx=.1, rely=.05)
+
+
+h = Scrollbar(myframe, orient='horizontal')
+v = Scrollbar(myframe)
+
+h.pack(side = BOTTOM, fill = X)
+v.pack(side = RIGHT, fill = Y)
 
 openFile = tk.Button(root, text="Open File",
                      padx=10, pady=5,
@@ -63,7 +70,7 @@ runApps.pack()
 
 # Create a label showing the directory for each app added.
 for app in apps:
-    label = tk.Label(frame, text=app)
+    label = tk.Label(myframe, text=app)
     label.pack()
 
 root.mainloop()
