@@ -5,7 +5,8 @@ Created on Nov 23, 2020
 '''
 
 import tkinter as tk
-from tkinter import *
+#from tkinter import filedialog, Canvas, Scrollbar, Frame
+from tkinter import filedialog
 import os
 
 root = tk.Tk()
@@ -28,7 +29,7 @@ def addApp():
         widget.destroy()
 
 
-    filenames= filedialog.askopenfilenames(initialdir="/", title="Select File",
+    filenames = filedialog.askopenfilenames(initialdir="/", title="Select File",
                                          filetypes=(("executables", "*.exe"), ("all files", "*.*")))
     root.tk.splitlist(filenames)
 
@@ -45,18 +46,40 @@ def runApps():
     for app in apps:
         os.startfile(app)
 
+# Resets apps, clears the queue.
+def resetApps():
+    apps = []
+
+    for widget in myframe.winfo_children():
+        widget.destroy()
+
+    if os.path.isfile('Saved Apps.txt'):
+        os.remove("Saved Apps.txt")
+
+def removeApp():
+    pass
+
 canvas = tk.Canvas(root, height=700, width=700, bg="#638EF9")
 canvas.pack()
 
 myframe = tk.Frame(root, bg="white")
-myframe.place(relwidth=.8, relheight=.8, relx=.1, rely=.05)
+myframe.place(relwidth=.8, relheight=.8, relx=.1, rely=.04)
 
+# scrollCanvas = Canvas(myframe)
+# frame = Frame(scrollCanvas)
+#
+# h = Scrollbar(myframe, orient='horizontal', command = scrollCanvas.xview())
+# v = Scrollbar(myframe, orient = 'vertical', command = scrollCanvas.yview())
+#
+# scrollCanvas.configure(yscrollcommand = v.set)
+# scrollCanvas.configure(xscrollcommand = h.set)
 
-h = Scrollbar(myframe, orient='horizontal')
-v = Scrollbar(myframe)
-
-h.pack(side = BOTTOM, fill = X)
-v.pack(side = RIGHT, fill = Y)
+# h.pack(side = "bottom", fill = "x")
+# v.pack(side = "right", fill = "y")
+#
+# scrollCanvas.pack()
+#
+# frame.bind("<Configure>", scrollEvent)
 
 openFile = tk.Button(root, text="Open File",
                      padx=10, pady=5,
@@ -67,6 +90,11 @@ runApps = tk.Button(root, text="Run Apps",
                      padx=10, pady=5,
                      fg="white", bg="#638EF9", command=runApps)
 runApps.pack()
+
+resetApps = tk.Button(root, text="Reset",
+                     padx=10, pady=5,
+                     fg="white", bg="#638EF9", command=resetApps)
+resetApps.pack()
 
 # Create a label showing the directory for each app added.
 for app in apps:
